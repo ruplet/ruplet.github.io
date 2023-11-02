@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Researcher</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Your Name</h1>
+            <p>Researcher in [Your Field]</p>
+        </header>
+        <main class="main-content">
+          <svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- States -->
+        <circle cx="100" cy="100" r="30" class="state" id="state1" />
+        <circle cx="300" cy="100" r="30" class="state" id="state2" />
+
+        <!-- Transition Arrows -->
+        <!-- State 1 to State 2 -->
+        <path d="M 130 100 L 270 100" class="transition" id="transition-1-2" />
+        <polygon points="265,95 275,100 265,105" class="transition" id="arrowhead-1-2" />
+    </svg>
+    <button id="trigger">Transition</button>
+
+            <section class="bio">
+                <h2>About Me</h2>
+                <p>[Brief description of your research interests]</p>
+            </section>
+        </main>
+        <footer class="footer">
+            <div class="links">
+                <h2>Connect</h2>
+                <ul>
+                    <li><a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a></li>
+                    <li><a href="https://github.com/yourusername" target="_blank">GitHub</a></li>
+                    <li><a href="https://twitter.com/yourusername" target="_blank">Twitter</a></li>
+                    <!-- Add or remove social links as needed -->
+                </ul>
+            </div>
+            <div class="resume">
+                <a href="your_resume.pdf" target="_blank" class="resume-button">Download Resume</a>
+            </div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
