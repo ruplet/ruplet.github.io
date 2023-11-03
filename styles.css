@@ -113,9 +113,18 @@ a:hover {
     marker-end: url(#arrowhead);
 }
 
+/* Style for the self-transition loop */
+.transition-loop {
+    stroke: black;
+    stroke-width: 2;
+    fill: none;
+    marker-end: url(#arrowhead);
+    marker-start: url(#arrowhead);
+}
+
 #transition-1-2 {
-    stroke-dasharray: 140;
-    stroke-dashoffset: 140;
+    /* stroke-dasharray: 140;
+    stroke-dashoffset: 140; */
     animation: dash 1s linear forwards;
 }
 
@@ -142,3 +151,34 @@ button {
     fill: green;
 }
 
+/* 
+.state {
+    width: 50px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    transition: transform 0.5s;
+  }
+
+  .arrow {
+    position: absolute;
+    width: 0; 
+    height: 0; 
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid black;
+    transition: transform 0.5s, opacity 0.5s;
+    opacity: 0;
+  }
+
+  .active {
+    border-color: red;
+  }
+
+  .visible {
+    opacity: 1;
+  } */
