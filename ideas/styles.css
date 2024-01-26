@@ -1,3 +1,37 @@
+/* body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.ingredient-selector {
+    margin-bottom: 20px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+#recipes-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.recipe {
+    margin-bottom: 10px;
+} */
+
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -29,4 +63,10 @@ label {
 
 .recipe {
     margin-bottom: 10px;
+}
+
+/* Add custom style for Select2 */
+.select2-container--default .select2-selection--multiple {
+    height: auto !important;
+    min-height: 34px;
 }

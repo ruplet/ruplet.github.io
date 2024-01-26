@@ -34,22 +34,6 @@ function populateDropdown(select, options) {
     });
 }
 
-function filterRecipes() {
-    const selectedIngredient = document.getElementById('ingredient-select').value;
-    if (!selectedIngredient) {
-        alert('Please select an ingredient.');
-        return;
-    }
-
-    fetch('german_dishes.json')
-        .then(response => response.json())
-        .then(data => {
-            const filteredRecipes = data.filter(recipe => recipe.ingredients[selectedIngredient]);
-            displayRecipes(filteredRecipes);
-        })
-        .catch(error => console.error('Error fetching JSON:', error));
-}
-
 function displayRecipes(recipes) {
     const recipesContainer = document.getElementById('recipes-container');
     recipesContainer.innerHTML = '';
@@ -73,11 +57,53 @@ function displayRecipes(recipes) {
         const instructionsList = document.createElement('ol');
         recipe.instructions.forEach(instruction => {
             const instructionItem = document.createElement('li');
-            instructionItem.textContent = instruction;
+            if (/^\d+\.\s/.test(instruction)) {
+                // If instruction starts with a numeric prefix, remove it
+                instructionItem.textContent = instruction.replace(/^\d+\.\s/, '');
+            } else {
+                instructionItem.textContent = instruction;
+            }
             instructionsList.appendChild(instructionItem);
         });
         recipeElement.appendChild(instructionsList);
 
         recipesContainer.appendChild(recipeElement);
     });
+}
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Load JSON data
+    fetch('german_dishes.json')
+        .then(response => response.json())
+        .then(data => {
+            // Populate the ingredient dropdown using Select2
+            $('#ingredient-select').select2({
+                data: getUniqueIngredients(data),
+                placeholder: 'Select ingredients',
+                closeOnSelect: false, // Keep the dropdown open after selecting an option
+            });
+
+            // Display all recipes initially
+            displayRecipes(data);
+        })
+        .catch(error => console.error('Error fetching JSON:', error));
+});
+
+function filterRecipes() {
+    const selectedIngredients = $('#ingredient-select').val();
+    if (!selectedIngredients || selectedIngredients.length === 0) {
+        alert('Please select at least one ingredient.');
+        return;
+    }
+
+    fetch('german_dishes.json')
+        .then(response => response.json())
+        .then(data => {
+            const filteredRecipes = data.filter(recipe =>
+                selectedIngredients.some(ingredient => recipe.ingredients[ingredient])
+            );
+            displayRecipes(filteredRecipes);
+        })
+        .catch(error => console.error('Error fetching JSON:', error));
 }
