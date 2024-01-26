@@ -1,0 +1,50 @@
+[
+    {
+        "food": "reference protein",
+        "Histidine": "16",
+        "Isoleucine": "30",
+        "Leucine": "61",
+        "Lysine": "48",
+        "Methionine + Cysteine": "23",
+        "Phenylalanine + Tyrosine": "41",
+        "Threonine": "26",
+        "Tryptophan": "6.6",
+        "Valine": "40"
+    },
+    {
+        "food": "rice white long-grain unenriched",
+        "Histidine": "24",
+        "Isoleucine": "43",
+        "Leucine": "83",
+        "Lysine": "36",
+        "Methionine + Cysteine": "44",
+        "Phenylalanine + Tyrosine": "87",
+        "Threonine": "36",
+        "Tryptophan": "12",
+        "Valine": "61"
+    },
+    {
+        "food": "beef ground 90% lean meat / 10% fat patty cooked broiled",
+        "Histidine": "33",
+        "Isoleucine": "44",
+        "Leucine": "78",
+        "Lysine": "83",
+        "Methionine + Cysteine": "36",
+        "Phenylalanine + Tyrosine": "70",
+        "Threonine": "39",
+        "Tryptophan": "5",
+        "Valine": "49"
+    },
+    {
+        "food": "kidney beans mature seeds cooked boiled without salt",
+        "Histidine": "27",
+        "Isoleucine": "43",
+        "Leucine": "78",
+        "Lysine": "67",
+        "Methionine + Cysteine": "25",
+        "Phenylalanine + Tyrosine": "81",
+        "Threonine": "41",
+        "Tryptophan": "12",
+        "Valine": "51"
+    }
+]

@@ -1,0 +1,94 @@
+[
+    {
+      "dish_name": "Sauerbraten",
+      "ingredients": {
+        "beef": "200g",
+        "vinegar": "1 cup",
+        "water": "1 cup",
+        "cloves": "5 pcs",
+        "bay_leaves": "2 pcs",
+        "peppercorns": "7 pcs"
+      },
+      "instructions": [
+        "1. Marinate the beef in a mixture of vinegar, water, cloves, bay leaves, and peppercorns for at least 24 hours.",
+        "2. Remove the beef from the marinade and brown it in a pot.",
+        "3. Add the marinade to the pot and simmer until the beef is tender.",
+        "4. Serve the Sauerbraten with your choice of side dishes."
+      ]
+    },
+    {
+      "dish_name": "Wiener Schnitzel",
+      "ingredients": {
+        "veal_or_pork_cutlets": "4 pieces",
+        "breadcrumbs": "1 cup",
+        "lemon": "1, sliced"
+      },
+      "instructions": [
+        "1. Flatten the veal or pork cutlets with a mallet.",
+        "2. Dredge the cutlets in breadcrumbs, ensuring they are well-coated.",
+        "3. Fry the cutlets in a pan until golden brown on both sides.",
+        "4. Serve the Wiener Schnitzel hot, garnished with lemon slices."
+      ]
+    },
+    {
+      "dish_name": "Bratwurst with Sauerkraut",
+      "ingredients": {
+        "bratwurst": "4 sausages",
+        "sauerkraut": "1 cup",
+        "mustard": "to taste"
+      },
+      "instructions": [
+        "1. Grill or pan-fry the bratwurst until fully cooked.",
+        "2. Heat the sauerkraut in a separate pan.",
+        "3. Serve the bratwurst on a plate with sauerkraut and mustard."
+      ]
+    },
+    {
+      "dish_name": "Kartoffelsalat",
+      "ingredients": {
+        "potatoes": "4 medium, boiled and sliced",
+        "onions": "1, finely chopped",
+        "bacon": "4 slices, cooked and crumbled",
+        "dressing": "vinegar, oil, mustard"
+      },
+      "instructions": [
+        "1. Boil and slice the potatoes.",
+        "2. Mix the potatoes with chopped onions and crumbled bacon.",
+        "3. Prepare a dressing with vinegar, oil, and mustard, and toss it with the potato mixture.",
+        "4. Serve the Kartoffelsalat chilled."
+      ]
+    },
+    {
+      "dish_name": "Gulasch",
+      "ingredients": {
+        "beef": "500g, cubed",
+        "onions": "2, chopped",
+        "bell_peppers": "2, sliced",
+        "paprika": "2 tbsp"
+      },
+      "instructions": [
+        "1. Brown the cubed beef in a pot.",
+        "2. Add chopped onions and sliced bell peppers to the pot.",
+        "3. Stir in paprika and let it simmer until the beef is tender.",
+        "4. Serve the Gulasch with potatoes or noodles."
+      ]
+    },
+    {
+      "dish_name": "Rouladen",
+      "ingredients": {
+        "beef_slices": "8 thin slices",
+        "mustard": "4 tbsp",
+        "bacon": "8 slices",
+        "onions": "2, finely chopped",
+        "pickles": "8, sliced"
+      },
+      "instructions": [
+        "1. Lay out the beef slices and spread mustard on each slice.",
+        "2. Place a slice of bacon, chopped onions, and sliced pickles on each beef slice.",
+        "3. Roll up the beef slices and secure with toothpicks.",
+        "4. Brown the Rouladen in a pan and then simmer until cooked through.",
+        "5. Serve the Rouladen with gravy and sides."
+      ]
+    }
+  ]
+  

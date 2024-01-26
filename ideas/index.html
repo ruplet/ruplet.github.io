@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>German Dishes</title>
+</head>
+<body>
+
+<div class="container">
+    <h1>German Dishes</h1>
+    
+    <div class="ingredient-selector">
+        <label for="ingredient-select">Select Ingredients:</label>
+        <select id="ingredient-select">
+            <option value="" selected disabled>Select an ingredient</option>
+        </select>
+        <button onclick="filterRecipes()">Filter Recipes</button>
+    </div>
+    
+    <div id="recipes-container"></div>
+</div>
+
+<script src="scripts.js"></script>
+</body>
+</html>
