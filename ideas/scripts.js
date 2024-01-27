@@ -138,32 +138,124 @@ function displayRecipeDetails(recipe) {
     recipeDetails.appendChild(historyElement);
 
 
-    // Display amino acid contents (mock data for illustration)
-    const aminoAcids = {
-        "Histidine": "16",
-        "Isoleucine": "30",
-        "Leucine": "61",
-        "Lysine": "48",
-        "Methionine + Cysteine": "23",
-        "Phenylalanine + Tyrosine": "41",
-        "Threonine": "26",
-        "Tryptophan": "6.6",
-        "Valine": "40"
-        // leucine: getRandomAminoAcidContent()
-    };
+    // // Display amino acid contents (mock data for illustration)
+    // const aminoAcids = {
+    //     "Histidine": "16",
+    //     "Isoleucine": "30",
+    //     "Leucine": "61",
+    //     "Lysine": "48",
+    //     "Methionine + Cysteine": "23",
+    //     "Phenylalanine + Tyrosine": "41",
+    //     "Threonine": "26",
+    //     "Tryptophan": "6.6",
+    //     "Valine": "40"
+    //     // leucine: getRandomAminoAcidContent()
+    // };
 
-    const aminoAcidsList = document.createElement('ul');
-    Object.keys(aminoAcids).forEach(acid => {
-        const acidItem = document.createElement('li');
-        acidItem.textContent = `${acid}: ${aminoAcids[acid]} mg`;
-        aminoAcidsList.appendChild(acidItem);
-    });
+    // const aminoAcidsList = document.createElement('ul');
+    // Object.keys(aminoAcids).forEach(acid => {
+    //     const acidItem = document.createElement('li');
+    //     acidItem.textContent = `${acid}: ${aminoAcids[acid]} mg`;
+    //     aminoAcidsList.appendChild(acidItem);
+    // });
     recipeDetails.appendChild(document.createElement('hr'));
     
     const node = document.createElement('p');
     node.textContent = 'The following is miligrams of each Essential Aminoacid (EAA) per 1g of protein in food. The data is mock data for illustration purposes only';
     recipeDetails.appendChild(node);
-    recipeDetails.appendChild(aminoAcidsList);
+    // recipeDetails.appendChild(aminoAcidsList);
+
+    // const referenceAminoAcids = {
+    //     "Histidine": "25",
+    //     "Isoleucine": "35",
+    //     "Leucine": "70",
+    //     "Lysine": "55",
+    //     "Methionine + Cysteine": "20",
+    //     "Phenylalanine + Tyrosine": "45",
+    //     "Threonine": "30",
+    //     "Tryptophan": "7.5",
+    //     "Valine": "45"
+    //     // Add more amino acids as needed
+    // };
+    // const aminoAcidsTable = document.createElement('table');
+    // aminoAcidsTable.innerHTML = `
+    //     <thead>
+    //         <tr>
+    //             <th>Amino Acid</th>
+    //             <th>${recipe.dish_name}</th>
+    //             <th>Reference Protein</th>
+    //         </tr>
+    //     </thead>
+    //     <tbody>
+    //         ${Object.keys(aminoAcids).map(acid => `
+    //             <tr>
+    //                 <td>${acid}</td>
+    //                 <td>${aminoAcids[acid]} mg</td>
+    //                 <td>${referenceAminoAcids[acid]} mg</td>
+    //             </tr>
+    //         `).join('')}
+    //     </tbody>
+    // `;
+    // recipeDetails.appendChild(aminoAcidsTable);
+
+    // Fetch amino acid contents from the JSON file
+    fetch('mg_of_eaa_per_g_of_protein.json')
+        .then(response => response.json())
+        .then(aminoAcidsData => {
+            var aminoAcids = aminoAcidsData.find(data => data.food === recipe.dish_name);
+
+            if (!aminoAcids) {
+                aminoAcids = aminoAcidsData.find(data => data.food === "reference protein");
+                // make a copy to not modify the original data
+                aminoAcids = JSON.parse(JSON.stringify(aminoAcids));
+                // randomly tweak one amino acid content for illustration
+                var aminoAcidNames = Object.keys(aminoAcids);
+                const randomIndex = 1 + Math.floor(Math.random() * (aminoAcidNames.length - 1));
+                const randomAminoAcid = aminoAcidNames[randomIndex];
+
+                for (var acidName of aminoAcidNames) {
+                    // console.log(aminoAcids[acidName]);
+                    aminoAcids[acidName] = parseFloat(aminoAcids[acidName]);
+                    if (acidName !== randomAminoAcid) {
+                        aminoAcids[acidName] *=  Math.random() * 0.3 + 0.85;
+                    } else {
+                        aminoAcids[acidName] *= 0.4;
+                    }
+                    aminoAcids[acidName] = Math.round(aminoAcids[acidName] * 10) / 10;
+                    // console.log(aminoAcids[acidName]);
+                }
+            }
+
+            // console.log(aminoAcids);
+
+            // Display amino acid contents for comparison
+            const aminoAcidsTable = document.createElement('table');
+            aminoAcidsTable.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Amino Acid</th>
+                        <th>${recipe.dish_name}</th>
+                        <th>Reference Protein</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${Object.keys(aminoAcids).map(acid => {
+                        if (acid !== 'food') {
+                            return `
+                                <tr>
+                                    <td>${acid}</td>
+                                    <td>${aminoAcids[acid]} mg</td>
+                                    <td>${aminoAcidsData[0][acid]} mg</td> <!-- Using the reference protein data -->
+                                </tr>
+                            `;
+                        }
+                        return '';
+                    }).join('')}
+                </tbody>
+            `;
+            recipeDetails.appendChild(aminoAcidsTable);
+        })
+        .catch(error => console.error('Error fetching amino acid data:', error));
 
     // Open the modal
     modal.style.display = 'block';
