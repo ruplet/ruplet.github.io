@@ -109,7 +109,7 @@ function filterRecipes() {
         .then(response => response.json())
         .then(data => {
             const filteredRecipes = data.filter(recipe =>
-                selectedIngredients.some(ingredient => recipe.ingredients[ingredient])
+                selectedIngredients.some(ingredient => Object.keys(recipe.ingredients).includes(ingredient))
             );
             displayRecipes(filteredRecipes);
         })
