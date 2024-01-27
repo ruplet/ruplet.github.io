@@ -7,27 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const ingredientSelect = document.getElementById('ingredient-select');
             const uniqueIngredients = getUniqueIngredients(data);
             populateDropdown(ingredientSelect, uniqueIngredients);
-            
-            // Display all recipes initially
-            displayRecipes(data);
 
-            // Display detailed information about a recipe in a modal
-            document.getElementById('recipes-container').addEventListener('click', function(event) {
-                const recipeElement = event.target.closest('.recipe');
-                if (recipeElement) {
-                    const recipeIndex = Array.from(recipeElement.parentNode.children).indexOf(recipeElement);
-                    displayRecipeDetails(data[recipeIndex]);
-                }
-            });
-        })
-        .catch(error => console.error('Error fetching JSON:', error));
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    // Load JSON data
-    fetch('german_dishes.json')
-        .then(response => response.json())
-        .then(data => {
             // Populate the ingredient dropdown using Select2
             $('#ingredient-select').select2({
                 data: getUniqueIngredients(data),
@@ -35,8 +15,27 @@ document.addEventListener("DOMContentLoaded", function() {
                 closeOnSelect: false, // Keep the dropdown open after selecting an option
             });
 
+
             // Display all recipes initially
             displayRecipes(data);
+
+            // Display detailed information about a recipe in a modal
+            document.getElementById('recipes-container').addEventListener('click', function(event) {
+                const recipeElement = event.target.closest('.recipe');
+                if (recipeElement) {
+                    const titleElement = recipeElement.querySelector('h3');
+                    if (titleElement) {
+                        const recipeData = data.find(recipe => recipe.dish_name === titleElement.textContent);
+                        if (recipeData) {
+                            displayRecipeDetails(recipeData);
+                        } else {
+                            console.error('Recipe data not found for:', titleElement.textContent);
+                        }
+                    } else {
+                        console.error('Title element not found in recipe:', recipeElement);
+                    }
+                }
+            });
         })
         .catch(error => console.error('Error fetching JSON:', error));
 });
@@ -116,12 +115,6 @@ function filterRecipes() {
         .catch(error => console.error('Error fetching JSON:', error));
 }
 
-
-
-
-// MODAL
-
-
 function displayRecipeDetails(recipe) {
     const modal = document.getElementById('recipe-modal');
     const recipeDetails = document.getElementById('recipe-details');
@@ -164,5 +157,6 @@ function getRandomAminoAcidContent() {
 }
 
 function closeModal() {
-    document.getElementById('recipe-modal').style.display = 'none';
+    const modal = document.getElementById('recipe-modal');
+    modal.style.display = 'none';
 }
