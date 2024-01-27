@@ -131,11 +131,25 @@ function displayRecipeDetails(recipe) {
     });
     recipeDetails.appendChild(ingredientsList);
 
+    // Display history information
+    recipeDetails.appendChild(document.createElement('hr'));
+    const historyElement = document.createElement('p');
+    historyElement.textContent = `History: ${recipe.history}`;
+    recipeDetails.appendChild(historyElement);
+
+
     // Display amino acid contents (mock data for illustration)
     const aminoAcids = {
-        leucine: getRandomAminoAcidContent(),
-        tryptophan: getRandomAminoAcidContent(),
-        // Add other amino acids as needed
+        "Histidine": "16",
+        "Isoleucine": "30",
+        "Leucine": "61",
+        "Lysine": "48",
+        "Methionine + Cysteine": "23",
+        "Phenylalanine + Tyrosine": "41",
+        "Threonine": "26",
+        "Tryptophan": "6.6",
+        "Valine": "40"
+        // leucine: getRandomAminoAcidContent()
     };
 
     const aminoAcidsList = document.createElement('ul');
@@ -145,6 +159,10 @@ function displayRecipeDetails(recipe) {
         aminoAcidsList.appendChild(acidItem);
     });
     recipeDetails.appendChild(document.createElement('hr'));
+    
+    const node = document.createElement('p');
+    node.textContent = 'The following is miligrams of each Essential Aminoacid (EAA) per 1g of protein in food. The data is mock data for illustration purposes only';
+    recipeDetails.appendChild(node);
     recipeDetails.appendChild(aminoAcidsList);
 
     // Open the modal
