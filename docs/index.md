@@ -12,7 +12,8 @@ Name pronounciation: [pa.vɛw balavɛn.dɛr]
     Your browser does not support the audio element.
 </audio>
 
-Check out my résumé! [PDF link](/software.pdf)
+## My résumé
+[Click to open: software.pdf](/software.pdf)
 
 ## My interests:
 1. Formal verification of computer programs

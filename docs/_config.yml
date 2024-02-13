@@ -1,9 +1,8 @@
 title: "eerio: field report"
 author:
-  name: eerio
-  email: pbalawender101@gmail.com
-description: Posts about things I got interested in. And a collection of things I found on the internet :)
-github_username: eerio
+  name: Paweł Balawender
+  email: p.balawender at mimuw edu pl
+description: A collection of things I found on the internet :)
 
 remote_theme: jekyll/minima
 minima:
