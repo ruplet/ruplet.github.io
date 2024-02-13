@@ -20,6 +20,3 @@ Check out my résumé! [PDF link](/software.pdf)
 3. Type theory
 
 ## Table of contents
-{% for post in site.posts %}
-- [{{ post.title }}]({{ post.url }})
-{% endfor %}
