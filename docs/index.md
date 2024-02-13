@@ -1,6 +1,5 @@
 ---
 title: Paweł Balawender
-toc: true
 ---
 
 Name pronounciation: [pa.vɛw balavɛn.dɛr]
@@ -23,4 +22,6 @@ My interests:
 3. Type theory
 
 ## Table of contents
-{:toc}
+{% for post in site.posts %}
+- [{{ post.title }}]({{ post.url }})
+{% endfor %}

@@ -8,6 +8,3 @@ github_username: eerio
 remote_theme: jekyll/minima
 minima:
   skin: dark
-
-plugins:
-  - jekyll-toc
