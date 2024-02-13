@@ -2,7 +2,7 @@
 title: Paweł Balawender
 ---
 
-[pa.vɛw balavɛn.dɛr]
+Name pronounciation: [pa.vɛw balavɛn.dɛr]
 
 <audio controls>
     <source src="name-pronunciation.wav" type="audio/wav">
@@ -11,7 +11,7 @@ title: Paweł Balawender
 
 Masters student of Computer Science
 
-Junior researcher at University of Warsaw
+Former junior researcher at University of Warsaw
 
 ## About Me
 
@@ -20,3 +20,6 @@ My interests:
 1. Formal verification of computer programs
 2. Programming language expressiveness
 3. Type theory
+
+## Table of contents
+{:toc}
