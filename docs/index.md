@@ -1,5 +1,6 @@
 ---
 title: Paweł Balawender
+toc: true
 ---
 
 Name pronounciation: [pa.vɛw balavɛn.dɛr]
