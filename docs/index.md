@@ -2,8 +2,6 @@
 title: Paweł Balawender
 ---
 
-# Paweł Balawender
-
 [pa.vɛw balavɛn.dɛr]
 
 <audio controls>
