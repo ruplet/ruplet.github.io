@@ -11,15 +11,16 @@
             <li class="p-name">{{ site.author.name | escape }}</li>
           {% endif -%}
           {% if site.author.email -%}
-            <li><a class="u-email" href="mailto:{{ site.author.email }}">{{ site.author.email }}</a></li>
+            <li class="u-email">{{ site.author.email }}</li>
           {%- endif %}
+          <li><a href="https://www.linkedin.com/in/balawender">LinkedIn profile</a></li>
         </ul>
       {%- endif %}
       </div>
       <div class="footer-col">
         <p>{{ site.description | escape }}</p>
       </div>
-    </div>
+  </div>
 
     <div class="social-links">
       {%- include social.html -%}
