@@ -1,4 +1,6 @@
-# How to Dress?
+---
+title: How to Dress?
+---
 
 - You can't start with inventing something good
 - To begin with, you need to be inspired by someone

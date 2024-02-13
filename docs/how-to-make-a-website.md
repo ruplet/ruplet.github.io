@@ -1,4 +1,7 @@
-# Creating your own website
+---
+title: How to create a personal website
+---
+
 ## Motivation
 Setting up a website was always terra incognita for me. I knew nothing about front-end development, had no skill at all in UI design. I didn't want to use ready to use websites like Wordpress due to its questionable opinion. Also, in terms of hosting - if I were to host a website, I wanted to use Google Cloud, but I didn't really know how to approach this so that I don't end up with 100.000$ of debt due to some misconfiguration.
 
