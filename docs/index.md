@@ -1,3 +1,8 @@
+---
+layout: default
+title: Paweł Balawender
+---
+
 # Paweł Balawender
 
 [pa.vɛw balavɛn.dɛr]
