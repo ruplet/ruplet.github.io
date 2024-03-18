@@ -1,0 +1,27 @@
+o teorii typów:
+czy wszystko na komputerze to lista bitów?
+czy wszystko w matematyce to zbiór?
+set theory vs e.g. type theory as the foundation of mathematics
+what about the foundation of computer science?
+should it be the same as the foundation of mathematics?
+
+świetna prezentacja:
+https://www.cs.unibo.it/~martini/BISS/martini-1.pdf
+
+
+- tabelka 2x2:
+- dziedzina informatyki (descriptive comp., decidability,
+  complexity th., model theory) i czy jest model-agnostic itd.
+
+Prezentacja:
+- Figma (podejście w stylu grafika!)
+- primitive recursion
+- course-of-value recursion
+- safe affine course-of-value recursion:
+  + 
+- najprostszy język w którym możemy napisać interpreter języka dla LF.
+  dwa podejścia:
+  + a) najprostsza teoria typów która może wyrazić dokładnie te programy
+      (typy zależne potrzebne żeby zgadzała się arność przy kompozycji)
+  + b) po prostu najprostszy automat który może zwrócić drzewo parsowania
+  + c) najprostszy automat który może zwrócić coś innego?

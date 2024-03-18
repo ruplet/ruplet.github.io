@@ -1,0 +1,59 @@
+Every primitive recursive language is type 0 (Chomsky)
+Every type 1 language is primitive recursive
+
+3 prace:
+a) mazza:LIPIcs.CSL.2015.24 
+We present a functional characterization of deterministic logspace-computable predicates based
+on a variant (although not a subsystem) of propositional linear logic, which we call parsimonious
+logic
+
+b) JONES1999151
+charakteryzacja PTIME i LOGSPACE przez języki programowania;
+LOGSPACE = decision problem solvable by read-only imperative programs
+on lisp-like lists. ptime: by recursive read-only programs
+
+c) bonfante:inria-00105744
+We propose two characterizations of complexity classes by means of programming languages. The first concerns Logspace while the second leads to Ptime.
+
+
+
+bardzo ważna praca:
+
+10.5555/1124427.1124430
+We investigate an imperative and a functional programming language. The
+computational power of fragments of these languages induce two hierarchies of complexity classes. Our first main theorem says that these hierarchies match, level by level,
+a complexity-theoretic alternating space-time hierarchy known from the literature. Our
+second main theorems says that a slightly different complexity-theoretic hierarchy (the
+Goerdt-Seidl hierarchy) also can be captured by hierarchies induced by fragments of the
+programming languages. Well known complexity classes like , , , ,
+etc., occur in the hierarchies.
+
+
+KRISTIANSEN2003213
+simple imperative programming language which, by limited capability,
+express classes like LOGSPACE, LINSPACE
+
+
+nie wiem jak się ma do moich badań hierarchia Grzegorczyka - tam są analizowane funkcje N->N, być może dałoby się to przenieść ale nie jest to zbyt naturalna odpowiedniość
+
+implement kmp (border array computation) in lintime language
+
+
+co się liczy?
+na czym ta logika operuje? tj. na jakiej strukturze
+czy problemy decyzyjne czy funkcyjne
+
+Immerman-Vardi:
+the class of ordered finite structures is definable in FO[LFP]
+iff it is decidable in P.
+
+
+FO[LFP] wyraża PTIME na uporządkowanych strukturach - napisy są ordered
+FO[TC^1] (fo with transitive closure of binary relations) jest rowne MSO na stringach. FO[TC^2] jest more expressive than MSO. FO[TC] = FO[LFP]
+where TC^r to transitive closure relacji 2r-arnych
+https://cstheory.stackexchange.com/q/9950
+
+
+FO[REGULAR] = NC^1
+where FO[REGULAR] is the set of decision problems reducible to some
+regular language via first-order reductions.

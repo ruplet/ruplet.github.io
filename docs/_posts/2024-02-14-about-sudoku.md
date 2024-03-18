@@ -3,6 +3,42 @@ layout: post
 title: About Sudoku
 ---
 
+What's the point with languages?
+- easy testing of ,,some'' properties:
+  + uniqueness/minimization of the simplest programs
+  + correctness of simple programs
+  + complexity of most programs
+  + termination complexity of all programs
+- weakest formalism which can accept the language of
+  valid programs in a given language
+- compiler is just a reduction. it can unwind syntactic sugar
+  and change paradigm to execute on a different computational model 
+
+## About Rubik's Cube
+Language for Rubik's Cube?
+a) sequence of moves from the solved state to the current state
+b) mere labels; to check if can be solved, the problem is equivalent to [3926446]
+https://math.stackexchange.com/a/3926446/876802
+
+solving Rubik's Cube requires O(n^2) moves:
+https://arxiv.org/pdf/1106.5736.pdf
+
+finding an optimal Rubik solution is NPC:
+https://arxiv.org/abs/1706.06708
+
+how to tell if Rubik's cube is solvable?:
+https://math.stackexchange.com/questions/127577/how-to-tell-if-a-rubiks-cube-is-solvable
+
+is Sudoku group uglier than Rubik's Cube's?
+https://en.wikipedia.org/wiki/Mathematics_of_Sudoku#The_sudoku_symmetry_group
+
+Schreier-Sims algorithm for Sudoku correctness checking?
+Some discussion here: http://forum.enjoysudoku.com/sudoku-symmetry-group-minimal-spec-t35573-75.html
+
+Knuth proving Schreier-Sims is polynomial time: (w.r.t. what?)
+https://arxiv.org/pdf/math/9201304.pdf
+
+
 ## Syntax for Sudoku
 Can we design such a syntactical language, so that it'll only be possible
 to write down in it a valid solution to a Sudoku, and all the valid Sudoku

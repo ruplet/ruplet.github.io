@@ -1,0 +1,35 @@
+I OI:
+Pionki
+
+Trójkąty
+Sponsor
+Suma kwadratów cyfr
+Przedsięwzięcie
+Wyspy na trójkątnej sieci
+Wahania akcji na giełdzie
+Nasycanie makrofanów
+Anagramy
+Przepustowość sieci
+
+
+
+oi constraints:
+
+an array of length r
+an array of ints between 0 and n
+procedure will be called exactly once
+
+If a construction is possible, this procedure should make exactly one call to craft to report
+the construction, following which it should return .
+Otherwise, the procedure should return without making any calls to craft.
+^ calling a function as an effect?
+
+''it can call a function g() at most q times''
+
+p[i] is even
+p[i] < p[i + 1]
+
+,,a 2d array is an adjacency matrix of an undircted graph'',
+i.e. b[i][j] = 0/1, b[i][i] = 0, b[i][j] = b[j][i] forall 0 <= i,j <= n-1
+
+represent that an array is sorted
