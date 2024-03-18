@@ -27,7 +27,7 @@ date:
   many functions, behaving totally different, depending on the input type)
 - assuming parametric polymorphism, there are not many functions of the type Forall X, X -> X.
   indeed, there is only one: the identity function
-- cite: 10.1145/99370.99404
+- Wadler's original paper: [@10.1145/99370.99404]
 
 # The strongest case: utilizing theorems for free
 - in a language weak enough, for a function with a type general enough, many
@@ -41,11 +41,12 @@ date:
 - that's the ultimate case of compiler optimization - we're guaranteed
   that a single minimal automaton exists which computes our function {0,1}\* -> Bool
 - for the more general case of finite-state transducers, we can't always minimize
-- example programming language for FST: cite [10.1007/11780885_38]
-- FST minimization sometimes possible cite [18919]
-- two-way transducers are stronger that one-way transducers (they are equivalent to mso-transductions of strings): cite [filiot2013twoway]
-- but two-way automata are equal to one-way automata: 
-- nondeterministic FST are closed under composition: https://cseweb.ucsd.edu/classes/wi14/cse105-a/LecFST.pdf
+- FST minimization sometimes possible [@18919]
+- nondeterministic FST are closed under composition: [@FSTcompositionclosed]
+- example programming language for FST: [@10.1007/11780885_38]
+- two-way transducers are stronger that one-way transducers (they are equivalent to mso-transductions of strings): [@filiot2013twoway]
+- but two-way automata are equal to one-way automata: [@142760]
+- and DSPACE(o(log log n)) = REG [@71799]
 
 # Main case: resource utilization guarantees
 - main focus of my work
@@ -64,11 +65,22 @@ date:
 - special case: implementing a HTTP server
 - in Agda, programs need to be total:
 - recursive programs must termiante
-- for corecursive programs, any finite observation needs to return an answer in a finite time
-(https://stackoverflow.com/a/52793218)
+- for corecursive programs, any finite observation needs to return an answer in a finite time [@stackoverflow52793218]
 
 # What's the deal with weak programming languages?
-- 
+- it's ok
+
+# About a language for FNP
+- NP is characterized by existential second-order logic
+- what about functional NP?
+- FSAT (provide a witness for satisfiability) can be PTIME-reduced to SAT:
+- ,,is phi with x_0=0 satisfiable? if so, x_0=0 ...''
+- can every NP search problem be reduced to a corresponding NP decision problem?
+- major open problem. All NP-complete search problems reduce to their decision problems (source: complexity zoo: FNP)
+- e.g. checking if number is prime is ptime, but factorizing is conjectured to be NP-intermediate [@kabanets]
+- FP-complete problems exist [@fpcomplete]:
+- if L is any P-complete language (under logspace many-one reductions), then the following problem is FP-complete (under logspace parsimonious reductions): given a sequence of inputs, compute the sequence of bits indicating which of the inputs are in L
+
 # Computational power as an effect
 - in Haskell, some side effects of a computation (such as interaction with the operating system) are
   modeled as monads
@@ -80,3 +92,5 @@ date:
   to a work tape in a monad. so a function of type f: Int -> WrkTp Int
   would take an int on input, return an int and also be able to
   utilize a special work memory for computation
+
+# References #
