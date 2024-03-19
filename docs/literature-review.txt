@@ -1,12 +1,3 @@
-problem:
-
-jeśli chcemy mieć funkcję f: A -> B
-to ona co prawda dowodzi że jeśli A to B,
-ale w sposób ekstensjonalny: podaj przykład A, a podam ci przykład B.
-ale czy w sposób intensjonalny to by nie było dużo silniejsze?
-podaj mi sposób stworzenia A, a podam ci sposób stworzenia B
-
-
 najważniejsze papiery teraz:
 Neergaard, 2004
 A Functional Language for Logarithmic Space
@@ -24,92 +15,8 @@ coś jak OEIS, ale dla programów komputerowych
 zjawisko obserwowalne na LeetCode to powoływanie się na inne zadania po numerach
 indeks problemów z różnych stron z zadaniami algorytmicznymi
 
-lazy can't have categorial coproducts
-complexity effects of laziness, okasaki functional ds
-
-jak silna jest potrzebna logika by stwierdzić spójność / sprzeczność zestawu aksjomatów?
-czy syntax musi być drzewem?
-teoria typów metajęzyka
-najsłabszy syntax, który wyrazi wszystkie poprawne programy innego języka
-taki syntax jest w stanie rozwiązać problem HALT dla rozważanego języka!!
-szukamy takiego metajęzyka, żeby problem stopu podjęzyka był łatwy.
-
-w FO nie odróżnimy dużego kwadratu od dużego prostokąta (dowód przez gry EF)
-
-gap pomiędzy poprawnością semantyczną, a syntaktyczną: ekstensjonalność vs intensjonalność
-
-
-problem enumeracji słów języka vs problem rozpoznawania języka
-czy brak klasyfikacji 4-wymairowych manifoldow (https://mathoverflow.net/questions/73818/why-classification-of-4-manifolds-is-not-possible)
-ma cos wspolnego z tym ze nie sklasyfikujemy wszystkich programow P (co ma zwiazek z P neq NP)
 tj. ze jest nieskonczenie wiele technik programistycznych
 semantic vs syntactic complexity classes
-
-finding a language for combinatorial object (e.g. Sudoku board as a tuple (param1, param2, ...)) is a compression problem!
-succint data structure
-
-interpreter ogólnie logiki to język naturalny
-forcing for axiom orthogonality. for which axiom sets forcing can be of use?
-CNF, DNF are also languages!
-
-głównie pytanie moich badań: ,,w jakim języku warto zapisywać obliczenia?''
-tj. jaki formalizm jest dobry do opisu obliczeń
-
-logiki na drzewie. czy dodanie drzew do teorii typów sprawia że język definiuje automaty na drzewach?
-
-dany zbiór zawsze ma jakąś ,,naturalną'' strukturę danych - taką która się zgadza z 
-językiem, w którym akurat to zdefiniowaliśmy. często to logika.
-
-typy powinny iść w parze z funkcjonalnością - tak żeby nie trzeba było tracić
-informacji o wykonanych obliczeniach poprzez zbyt generalne typy.
-
-najmniejszy język który potradi wygenerować obiekty wszystkich typów języka
-
-rozważyć graf reprezetnacji danych, gdzie edge to redukcja o jakiejś złożoności
-
-kwatyfikator: możliwość zaaplikowania funkcji do całego zbioru oraz zagregować wszystkie wyniki od razu
-kwantyfikator uniwersalny i egzystencjalny się cechuje bardzo prostą agregacją - trzymamy 1 bit
-na agregację poprzednich wyników i możemy zrobić short-circuit
-
-realizacja kwantyfikatora na komputerze wymaga zareprezentowania zbioru - możemy to zrobić explicite albo implicite
-
-logika II rzędu jest trudna bo wymaga przeglądania bardzo skomplikowanych zbiorów.
-być może byłaby łatwiejsza gdyby te skomplikowane zbiory były zadane przez ich ,,generatory''?
-
-typ właściwy dla maszyny turinga to zawsze [Bit]
-
-cała teoria typów to tylko lukier syntaktyczny!
-
-
-
-
-succinct data structure
-they are succinct, but enable efficient algorithms without decompression
-lossless data compression - cool, but has to unpack
-
-
-metody inferencji w sudoku. czy istnieje mały zbiór metod inferencji,
-który jest w stanie rozwiązać wszystkie łamigłówki?
-to pytanie brzmi bardzo podobnie do tego, że jeśli
-p =/= np, to istnieje nieskonczenie wiele technik algorytmicznych
-
-
-wpływ reprezentacji wejścia na złożoność problemu
--> teoria typów!
-
-jeden model obliczeniowy: RAM machine with binary alphabet
-
-czy liczby naturalne chcemy reprezentować jako
-ciągi jedynek (unarnie) czy binarnie?
-
-result needed:
-when data on input is in a convenient form,
-a reduction is in L, but if it the input is just represented
-as a natural number (because every countable sequence can be numbered),
-no efficient algorithm exists (try proving that the algorithm
-would probably have to 'unpack' the structure, i.e. construct the
-actual structure, which it is unable to because of the memory limit)
-
 
 neil d jones book
 http://hjemmesider.diku.dk/~neil/comp2book2007/book-whole.pdf
@@ -209,21 +116,6 @@ https://cstheory.stackexchange.com/q/16119/71933
 https://blog.computationalcomplexity.org/2020/08/sharp-p-and-issue-of-natural-problems.html
 
 
-# classes and burnside lemma
-
-
-
-
-typy dają opis danych, stanowią specyfikację programu
-są deklaratywne, nie mówią jak uzyskać obiekt, tylko jakie ma
-ostatecznie własności
-
-język programowania daje opis programu. jest konstruktywny,
-stanowi opis konstrukcji
-
-słabsze teorie typów sprawiają, że łatwiej jest napisać poprawny program - 
-bo nie jesteśmy w stanie ściśle sformułować pożądanych własności wyniku
-
 Bonfante LOGSPACE, PTIME (decision)
 https://inria.hal.science/inria-00105744/document
 
@@ -249,7 +141,6 @@ Ulrich Schopp
 tu sa fajne referencje!
 https://ulrichschoepp.de/Docs/seci.pdf
 
-18 17 4 13 14
 
 
 
@@ -257,12 +148,7 @@ it is not true that a programming language which can self-interpret,
 cannot be decidable:
 https://cs.stackexchange.com/questions/53485/implicit-complexity-and-interpretation-of-total-languages?rq=1
 
-On Syntactic and Semantic Complexity Classes
-Anuj Dawar
-University of Cambridge Computer Laboratory
-Spitalfields Day, Isaac Newton Institute, 9 January 2012
-syntactical complexity class:
-https://www.newton.ac.uk/files/seminar/20120109163017301-152985.pdf
+
 e.g. NP = ESO (Fagin 1974), so NP is syntactical 
 major open problem: 
 Does P admit a syntactic characterisation?

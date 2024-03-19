@@ -3,17 +3,6 @@ layout: post
 title: About Sudoku
 ---
 
-What's the point with languages?
-- easy testing of ,,some'' properties:
-  + uniqueness/minimization of the simplest programs
-  + correctness of simple programs
-  + complexity of most programs
-  + termination complexity of all programs
-- weakest formalism which can accept the language of
-  valid programs in a given language
-- compiler is just a reduction. it can unwind syntactic sugar
-  and change paradigm to execute on a different computational model 
-
 ## About Rubik's Cube
 Language for Rubik's Cube?
 a) sequence of moves from the solved state to the current state
@@ -59,17 +48,6 @@ a brute-force search of the remaining possible values.
 - (Russel, Jarvis 2006: http://www.afjarvis.org.uk/sudoku/russell_jarvis_spec2.pdf) here they analyzed the number of valid solutions modulo some solution-preserving symmetries. They found it's ~5 bilion using Burnside's lemma. But the Burnside's lemma is non-constructive. By using this approach we could design a language in which a valid operation is applying one of the solution-preserving symmetries (such as relabeling the numbers), but we would have to start with a valid solution - and no classification is known for the 5B starting points; http://www.afjarvis.org.uk/sudoku/sudgroup.html
 - Aviv and Ilan Adlers (father and son) found out that the symmetries considered
 above are truly all the symmetries which preserve solutions: https://adler.ieor.berkeley.edu/ilans_pubs/suduko_2008.pdf
-
-## Possible approaches
-- first of all: don't consider the nxn case, only the 9x9
-- would Vapnik-Chervonenkis dimension be of use?
-- it's a compression problem really. you compress from 81 numbers 1-9 to set
-which is significantly smaller (but still large)
-- dimensionality reduction from machine learning?
-- could variational auto-encoder learn how to compress and decompress these 
-numbers?
-- could using advanced sudoku-solving help us reduce the number of solutions
-to brute-force?
 
 ## Advanced sudoku-solving techniques
 - Phistomefel Ring:

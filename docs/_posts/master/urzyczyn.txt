@@ -1,24 +1,3 @@
-kierunki:
-
-a) obliczeniowa interpretacja różnych aksjomatów logicznych
-  + niezgodność aksjomatów
-
-- forcing as a program transformation
-  https://hal.science/hal-00685150/document
-
-- Krivine 2002: AC corresponds to a global clock in the CH correspondence
-  https://www.irif.fr/~krivine/articles/quote.pdf
-
-- peirce = call/cc
-
-- ML with call/cc is unsound
-  https://www.cis.upenn.edu/~bcpierce/types/archives/1991/msg00034.html
-
-- jak osłabić dependent sum type, by pogodzić go z logiką klasyczną?
-https://ieeexplore.ieee.org/document/6280455
-
-- jak udowodnić pełny aksjomat wyboru w teorii typów Martina-Lofa?
-https://plato.stanford.edu/entries/axiom-choice/choice-and-type-theory.html
 
 Paradoks Herbelina:
 - unrestricted use of `call/cc` and `throw` in a language with dependent sum types and equality
@@ -39,14 +18,6 @@ Paradoks Herbelina:
 
 - kontynuacje =/= wyjątki
   https://link.springer.com/content/pdf/10.1007/3-540-48523-6_60.pdf
-
-Type theory is the syntax of category theory,
-  category theory provides semantics for type theory
-Lambda calculus is a logic
-Logic can be internalized in a category with sufficient structure
-Complexity classes correspond directly to different logics
-  and to different types of automata
-Lambda calculus is a type theory
 
 Type theory is both a logic and a computation: this is the C-H isomorphism
 https://math.stackexchange.com/a/2811256/876802
@@ -76,19 +47,12 @@ Grohe 2012: https://dl.acm.org/doi/pdf/10.1145/2371656.2371662
 - Let C be a class of graphs with at least one excluded minor. Then IFP+C captures PTIME on C.
 - IFP+C does not capture PTIME on the class of cubic graphs [Cai et al. 1992]
 
-Barrington's theorem: https://blog.computationalcomplexity.org/2008/11/barringtons-theorem.html
-Barrington showed that width-five branching program can simulate any Boolean formula and thus the complexity class NC1
-
-Fagin 1974: ESO = NP
 
 Dawar, Grohe, Holm, Laubner:
 def. LFP+rank: LFP logic + an operator to define the rank of a definable matrix
 then IFP+C < LFP+rank <= PTIME
 (tu link do prezentacji, w której Eryk Kopczyński najwyraźniej coś majstrował: https://logic.rwth-aachen.de/~pakusa/almoth_ilmenau_2012.pdf)
 nie wiadomo czy sa własności PTIME, których nie możemy wyrazić w LFP+rank
-
-FO over strings = star-free REG
-Immerman-Vardi: na strukturach uporządkowanych PTIME = FO[LFP] = FO[IFP] 
 
 diagram Immermana:
 https://people.cs.umass.edu/~immerman/descriptive_complexity.html

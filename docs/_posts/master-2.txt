@@ -58,8 +58,3 @@ equality is graph isomorphism
 Trakhtenbrot's theorem: it is undecidable whether FO sentence
   can be realized by a finite undirected graph
 
-
-
-
-What is in
-
