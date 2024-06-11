@@ -95,4 +95,30 @@ So practically, the lower bound for entropy is that each letter gives us log2(13
 https://nordvpn.com/pl/blog/security-questions/
 https://diceware.dmuth.org/
 
+23. On zero-knowledge proof of password knowledge: part of my e-mail to prof. Dziembowski
+
+ Konkretniej, od długiego już czasu próbuję opracować pewien ,,idealny'' system układania haseł. Aktualnie myślę o czymś takim:
+- dzielimy naszych znajomych** na spójne składowe*** - grupa przyjaciół z liceum, grupa współpracowników, rodzina itd.
+- znajdujemy pytania, na które większość tej grupy doskonale zna odpowiedź, ale raczej nikt poza nią, np. pytanie o pseudonim, którym nazywaliśmy jakiegoś znajomego jest raczej sensownym pytaniem do grupy przyjaciół z liceum (nazwisko już gorzej - można zmniejszyć entropię przeszukując znajomych na Facebooku)
+- naszym hasłem do credential vaulta jest konkatenacja odpowiedzi na pytania kontrolne. podpowiedzią do hasła są dokładnie pytania kontrolne + opis czy z dużej litery czy z małej itd.
+- teraz kluczowa część: do credential vaulta autentyfikujemy się poprzez Zero Knowledge proof na znajomość hasła. Serwer autentyfikacji nigdy nie poznaje odpowiedzi na nasze pytania kontrolne (które już teraz są cenne, bo są naszymi prywatnymi sekretami, których w życiu mamy skończoną liczbę).
+- credential vault trzyma już bazę normalnego menadżera haseł, który do każdego mniej krytycznego serwisu generuje nam długie, trudne hasło
+
+Natomiast całkowicie nie wiem, czy np. ten ZKP jest w ogóle możliwy, a jeśli tak - jak uściślić wymagania i przeprowadzić dowód. Z tego co znalazłem, IEEE P1363.2 definiuje pojęcie Zero-knowledge password proof, nie udało mi się jednak znaleźć sensownej implementacji tego, albo chociaż algorytmu dowodzenia. Zapotrzebowanie na coś takiego pewnie by było - w szczególności, ja bym *bardzo* chciał tego używać dla siebie.
+** - albo inne instytucje, które w jak najdłuższym horyzoncie będą w porządny sposób przechowywać jakieś niepubliczne informacje. Może bank musi trzymać o nas jakieś informacje w taki sposób, że zawsze możemy się zgłosić a on nam jej udzielić? Chodzi o to, żebyśmy byli zabezpieczeni nawet na taką sytuację, że w wypadku np. stracimy całą pamięć - wtedy dalej musimy móc odzyskać nasze hasła.
+*** - najłatwiej pewnie ułożyć graf typu gwiazda z nami w środku, żeby poszczególne spójne składowe nie mogły się dogadać, by bez nas odtworzyć nasze hasło. Do tego dochodzi jakieś dzielenie sekretów (że 3 grupy mogą odtworzyć, ale 2 już nie) itd.
+
+24. On zero-knowledge proof of password knowledge 2: part of my another e-mail to prof. Dziembowski
+Wczoraj udało mi się natrafić na coś więcej: metody Password-authenticated Key Agreement. Początkowo natrafiłem na SRP i dowiedziałem się, że protokół jest już częściwo zaimplementowany w OpenSSL. Potem jednak znalazłem sporo krytyki tego protokołu, co doprowadziło mnie chyba do obecnego state-of-the-art: OPAQUE[1], który robi dokładnie to czego potrzebuję (logowanie hasłem, bez ujawniania hasła serwerowi, nawet podczas rejestracji). Ponadto, Cloudflare się tym zainteresował kilka lat temu i nawet napisał fajne demo:
+https://opaque-full.research.cloudflare.com/
+(ich implementacja OPAQUE też jest dostępna na GitHubie)
+Ale generalnie cała koncepcja wydaje mi się bardzo przyszłościowa - jeśli byśmy mieli serwis z logowaniem po OPAQUE, który mógłby nas autentykować przez OAuth do pozostałych serwisów, to byłoby całkiem rewolucyjne w kwestii haseł - na ten moment to jeszcze nie istnieje. (Cloudflare to zrobił, ale wygląda na to że nie pociągnął tego pomysłu dalej. Zresztą ,,there is never nothing new in research'').
+
+25. On blockchain storage
+https://ethereum.stackexchange.com/questions/872/what-is-the-cost-to-store-1kb-10kb-100kb-worth-of-data-into-the-ethereum-block?rq=1
+https://www.reddit.com/r/ethereum/comments/6qijeq/boobies_on_the_blockchain_a_practical_experiment/
+
+https://ethereum.stackexchange.com/questions/7884/how-can-i-store-data-in-ethereum-blockchain
+
+
 
