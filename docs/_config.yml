@@ -9,7 +9,9 @@ minima:
   skin: dark
 
 defaults:
-- scope:
-    path: ""
-  values:
-    layout: post
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
