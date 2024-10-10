@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "[PL] Loyalty programs for shareholders on Warsaw Stock Exchange and global"
 ---
 
