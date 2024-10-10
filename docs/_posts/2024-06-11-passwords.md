@@ -122,3 +122,10 @@ https://ethereum.stackexchange.com/questions/7884/how-can-i-store-data-in-ethere
 
 
 
+26. Jak sprawiedliwie rzucic niesprawiedliwa moneta (kostka)?
+27. Randomness extractors
+28. https://crypto.stackexchange.com/questions/42147/dice-rolls-as-entropy-source
+29. what is the optimal entropy gain (in number of bits) per a single dice roll in these 2 proposed
+ randomness extractors from dice? minimax? method which gives best randomness extraction when
+ given the least random dice?
+
