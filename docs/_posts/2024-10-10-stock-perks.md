@@ -1,6 +1,6 @@
 ---
 layout: post
-title: `[PL]` Loyalty programs for shareholders on Warsaw Stock Exchange and global
+title: "[PL] Loyalty programs for shareholders on Warsaw Stock Exchange and global"
 ---
 
 Programy lojalnościowe na GPW:
