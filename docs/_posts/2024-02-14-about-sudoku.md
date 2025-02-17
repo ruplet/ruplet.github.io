@@ -3,6 +3,13 @@ layout: post
 title: About Sudoku
 ---
 
+## Main question
+Can you write an efficient computer program, which will output a random, uniquely solvable
+Sudoku puzzle? What about a random, solvable Rubik's cube state? I.e. sample from
+the uniform distribution over all valid Sudoku puzzles (2 ways: a) sample from solved Sudoku grids,
+then proceed to just remove some entries, but it might render the solution to not be unique, b)
+sample from the set of solvable, unfinished sudoku grids)
+
 ## About Rubik's Cube
 Language for Rubik's Cube?
 a) sequence of moves from the solved state to the current state
