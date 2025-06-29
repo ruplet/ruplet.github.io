@@ -6,7 +6,7 @@ title: Paweł Balawender
 Masters student of Computer Science
 Former junior researcher at University of Warsaw
 
-Name pronounciation: [pa.vɛw balavɛn.dɛr]
+Name pronounciation: ['pa.vɛw bala'vɛn.dɛr]
 <audio controls>
     <source src="name-pronunciation.wav" type="audio/wav">
     Your browser does not support the audio element.
