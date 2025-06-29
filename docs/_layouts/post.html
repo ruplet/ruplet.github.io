@@ -55,6 +55,7 @@ layout: base
         https://github.com/giscus/giscus/issues/336#issuecomment-1009551934  ,
         https://stackoverflow.com/a/57795495/3622836
       -->
+  <div id="giscus-container"></div>
   <script>
     let giscusTheme = "light";
 
@@ -82,7 +83,7 @@ layout: base
 
     let giscusScript = document.createElement("script");
     Object.entries(giscusAttributes).forEach(([key, value]) => giscusScript.setAttribute(key, value));
-    document.body.appendChild(giscusScript);
+    document.getElementById("giscus-container").appendChild(giscusScript);
   </script>
 
 
