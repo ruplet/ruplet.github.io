@@ -6,4 +6,4 @@ description: A collection of things I found on the internet :)
 
 remote_theme: jekyll/minima
 minima:
-  skin: dark
+  skin: auto
