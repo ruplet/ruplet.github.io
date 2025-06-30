@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+
+{%- include head.html -%}
+
+<body>
+
+    {%- include header.html -%}
+
+    <main class="page-content" aria-label="Content">
+        <div class="wrapper">
+            {{ content }}
+        </div>
+    </main>
+
+    {%- include footer.html -%}
+
+    {%- include sub-footer.html -%}
+
+    <!-- CryptoJS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const storageKey = "protectedContentPassword";
+
+            function decryptAES(encrypted, password) {
+                try {
+                    const decrypted = CryptoJS.AES.decrypt(encrypted, password).toString(CryptoJS.enc.Utf8);
+                    return decrypted.length ? decrypted : null;
+                } catch {
+                    return null;
+                }
+            }
+
+            function setupProtectedBoxes(password) {
+                document.querySelectorAll(".protected-box").forEach(box => {
+                    const url = box.dataset.encryptedUrl;
+
+                    fetch(url)
+                        .then(res => res.text())
+                        .then(encrypted => {
+                            const decrypted = decryptAES(encrypted, password);
+
+                            if (decrypted) {
+                                localStorage.setItem(storageKey, password);
+                                box.innerHTML = decrypted;
+                            } else {
+                                box.innerHTML = `
+              <form class="password-form" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <label>
+                  <strong>🔒 Protected content — please log in:</strong><br>
+                  <input type="password" name="password" placeholder="Password" required style="padding: 0.5rem; width: 100%;">
+                </label>
+                <button type="submit" style="padding: 0.5rem; width: max-content;">Unlock</button>
+              </form>
+              <p class="error-msg" style="color: red; display: none;">Incorrect password. Please try again.</p>
+            `;
+
+                                const form = box.querySelector("form");
+                                const errorMsg = box.querySelector(".error-msg");
+
+                                form.addEventListener("submit", e => {
+                                    e.preventDefault();
+                                    const pwd = form.password.value;
+                                    const result = decryptAES(encrypted, pwd);
+
+                                    if (result) {
+                                        localStorage.setItem(storageKey, pwd);
+                                        box.innerHTML = result;
+                                    } else {
+                                        errorMsg.style.display = "block";
+                                        form.reset();
+                                    }
+                                });
+                            }
+                        })
+                        .catch(err => {
+                            console.error("Could not load encrypted file:", err);
+                            box.innerHTML = "<p style='color: red;'>Failed to load encrypted content.</p>";
+                        });
+                });
+            }
+
+            const stored = localStorage.getItem(storageKey);
+            setupProtectedBoxes(stored || "");
+        });
+    </script>
+</body>
+
+</html>
