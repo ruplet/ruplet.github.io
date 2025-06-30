@@ -14,7 +14,7 @@ fi
 infile="$1"
 outfile="${infile}.enc"
 
-openssl enc -aes-256-cbc -in "$infile" -out "$outfile" -pass pass:"Secret Passphrase" -e -base64
+openssl enc -aes-256-cbc -in "$infile" -out "$outfile" -e -base64
 
 echo "Encrypted file written to: $outfile"
 
