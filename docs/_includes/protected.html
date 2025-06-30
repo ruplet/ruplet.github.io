@@ -100,12 +100,8 @@
 </div>
 
 <script>
-  // Get the base URL of your GitHub Pages site
-  // This will be something like "https://yourusername.github.io/your-repo-name"
-  // or "https://yourusername.github.io" if it's a user/organization page.
-  const BASE_URL = window.location.origin + "{{ site.baseurl }}";
-
   // The path to the encrypted file, passed from Jekyll Liquid
+  // This path is relative to the site root (e.g., /docs/emails/solovay/question.txt.enc)
   const ENCRYPTED_FILE_PATH = "{{ include.url }}";
 
   // Derive paths for salt and nonce files
@@ -132,58 +128,20 @@
     }
   }
 
+  // No longer needed for debugging in production, but kept for completeness if you re-enable.
+  // function arrayBufferToHexString(buffer) {
+  //     return Array.from(new Uint8Array(buffer))
+  //         .map(b => b.toString(16).padStart(2, '0'))
+  //         .join('');
+  // }
+
   async function fetchFileContent(filePath) {
-    // Construct the full URL to the raw file on GitHub
-    // Example: https://raw.githubusercontent.com/yourusername/your-repo-name/main/docs/emails/solovay/question.txt.enc
-    // This assumes your Jekyll site is served from the 'main' branch's root or 'docs' folder.
-    // Adjust 'main' if your default branch is different (e.g., 'master').
-    // Adjust 'your-repo-name' if BASE_URL doesn't include it.
-    // A more robust way might be to get the repo name from window.location.pathname
-    // but for Jekyll, the site.baseurl usually handles the repo part.
-
-    // Let's construct a more reliable raw content URL based on the current page's URL
-    // and the relative path provided by Jekyll.
-    // This is often the most complex part of static site fetching.
-
-    // This attempts to get the raw.githubusercontent.com URL.
-    // It's crucial this matches how GitHub serves your raw files.
-    // For user/org pages (yourusername.github.io), the repo name is the username.
-    // For project pages (yourusername.github.io/repo-name), the repo name is repo-name.
-
-    // Get GitHub username and repository name from window.location
-    const pathParts = window.location.pathname.split('/').filter(p => p.length > 0);
-    let githubUsername = '';
-    let githubRepo = '';
-
-    if (pathParts.length > 0 && BASE_URL === window.location.origin) {
-        // User/Organization page: https://yourusername.github.io
-        githubUsername = pathParts[0];
-        githubRepo = ''; // No repo name in URL path
-    } else if (pathParts.length > 0 && BASE_URL.includes(window.location.origin + '/' + pathParts[0])) {
-        // Project page: https://yourusername.github.io/repo-name
-        githubUsername = window.location.hostname.split('.')[0]; // yourusername
-        githubRepo = pathParts[0]; // repo-name
-    } else {
-        // Fallback or more complex structure, might need manual configuration
-        console.warn("Could not reliably determine GitHub repo structure. Using a generic raw URL.");
-        // You might need to manually set these if the auto-detection fails for your specific setup
-        // githubUsername = "YOUR_GITHUB_USERNAME";
-        // githubRepo = "YOUR_REPO_NAME"; // Leave empty if it's a user/org page
-    }
-
-    // Construct the raw.githubusercontent.com URL
-    // Assumes files are in the 'main' branch. Change 'main' to 'master' if needed.
-    let rawUrl = `https://raw.githubusercontent.com/${githubUsername}/${githubRepo}/main${filePath}`;
-    
-    // If it's a user/org page, the repo name is part of the username, so no extra /repo-name/ in the raw URL
-    if (githubRepo === '') {
-        rawUrl = `https://raw.githubusercontent.com/${githubUsername}/${githubUsername}.github.io/main${filePath}`;
-    }
-
-    console.log(`Fetching: ${rawUrl}`);
-    const response = await fetch(rawUrl);
+    // With relative URLs, we just fetch the path directly.
+    // Jekyll serves these files from the same origin as your HTML page.
+    console.log(`Fetching: ${filePath}`);
+    const response = await fetch(filePath);
     if (!response.ok) {
-      throw new Error(`Failed to fetch ${filePath}: ${response.statusText}`);
+      throw new Error(`Failed to fetch ${filePath}: ${response.status} ${response.statusText}`);
     }
     return response.text(); // Return as text (Base64 string)
   }
@@ -238,6 +196,20 @@
         false, // Not extractable (good for security)
         ['decrypt']
       );
+
+      // Debugging information (removed from UI, but can be re-added if needed)
+      // let derivedKeyHex = "Key not extractable (good for security!)";
+      // try {
+      //     const rawAesKeyBuffer = await crypto.subtle.exportKey('raw', aesKey);
+      //     derivedKeyHex = arrayBufferToHexString(rawAesKeyBuffer);
+      // } catch (e) {
+      //     derivedKeyHex = `Could not export key (expected if not extractable): ${e.message}`;
+      // }
+      // console.log(`Salt (Base64): ${b64Salt}`);
+      // console.log(`Nonce (Base64): ${b64Nonce}`);
+      // console.log(`Derived AES Key (Hex): ${derivedKeyHex}`);
+      // console.log(`PBKDF2 Iterations: ${PBKDF2_ITERATIONS}`);
+
 
       // 3. Decrypt the ciphertext with GCM
       const decryptedBuffer = await crypto.subtle.decrypt(
