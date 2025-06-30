@@ -10,5 +10,8 @@
         "**/.hg": true,
         "**/.DS_Store": true,
         "**/Thumbs.db": true
+    },
+    "files.associations": {
+        "evp.h": "c"
     }
 }

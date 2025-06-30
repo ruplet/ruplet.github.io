@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Web Crypto API Decryptor (C AES-GCM Compatible)</title>
+  <style>
+    body { font-family: sans-serif; margin: 20px; }
+    textarea { width: 90%; max-width: 800px; padding: 10px; margin-bottom: 10px; }
+    input[type="text"], input[type="password"], input[type="number"] { width: 90%; max-width: 400px; padding: 8px; margin-bottom: 10px; }
+    button { padding: 10px 20px; cursor: pointer; margin-right: 10px; }
+    pre { background-color: #f0f0f0; padding: 15px; border: 1px solid #ddd; white-space: pre-wrap; word-break: break-all; }
+    .security-info { color: green; font-weight: bold; border: 2px solid green; padding: 10px; margin-bottom: 20px; }
+    .debug-info { background-color: #e6f7ff; border: 1px solid #91d5ff; padding: 10px; margin-top: 15px; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <h1>Web Crypto API Decryptor (C AES-GCM Compatible)</h1>
+
+  <div class="security-info">
+    <p><strong>Authenticated Encryption:</strong> This decryptor uses AES-GCM, which provides both <strong>confidentiality</strong> (data is secret) and <strong>integrity/authenticity</strong> (data has not been tampered with). If decryption succeeds, you can be confident the data is both secret and authentic.</p>
+  </div>
+
+  <p>This decryptor expects ciphertext encrypted with a C program using <strong>AES-256-GCM, PBKDF2-SHA512, with explicit Base64-encoded salt and nonce</strong>.</p>
+
+  <label for="cipher">Paste Base64 Ciphertext (includes GCM tag):</label><br>
+  <textarea id="cipher" rows="10" cols="80" placeholder="Paste Base64 ciphertext here"></textarea><br>
+
+  <label for="saltInput">Salt (Base64 - from .salt file):</label><br>
+  <input type="text" id="saltInput" value="" placeholder="Paste Base64 Salt here"><br>
+
+  <label for="nonceInput">Nonce (Base64 - from .nonce file, 12 bytes):</label><br>
+  <input type="text" id="nonceInput" value="" placeholder="Paste Base64 Nonce here (12 bytes/96 bits)"><br>
+
+  <label for="iterationsInput">PBKDF2 Iterations:</label><br>
+  <input type="number" id="iterationsInput" value="100000" placeholder="PBKDF2 Iterations"><br>
+
+  <label for="passwordInputWebCrypto">Password:</label><br>
+  <input type="password" id="passwordInputWebCrypto" placeholder="Enter the password used for encryption"><br>
+
+  <button onclick="decryptWebCrypto()">Decrypt</button>
+  <pre id="outputWebCrypto" class="output-box"></pre>
+
+  <div class="debug-info">
+      <h3>Debugging Information</h3>
+      <pre id="debugOutputWebCrypto"></pre>
+  </div>
+
+  <script>
+    // --- Helper Functions ---
+    // Helper function to convert base64 string to Uint8Array
+    function base64ToUint8Array(base64) {
+      const binary_string = window.atob(base64);
+      const len = binary_string.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binary_string.charCodeAt(i);
+      }
+      return bytes;
+    }
+
+    // Helper function to convert ArrayBuffer or Uint8Array to hex string (for debugging)
+    function arrayBufferToHexString(buffer) {
+        return Array.from(new Uint8Array(buffer))
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join('');
+    }
+
+    // --- Decryption Function for Web Crypto API (AES-GCM) ---
+    async function decryptWebCrypto() {
+      const base64CiphertextWithTag = document.getElementById('cipher').value.trim();
+      const password = document.getElementById('passwordInputWebCrypto').value;
+      const saltBase64 = document.getElementById('saltInput').value.trim();
+      const nonceBase64 = document.getElementById('nonceInput').value.trim(); // Renamed from ivBase64 to nonceBase64 for GCM clarity
+      const iterations = parseInt(document.getElementById('iterationsInput').value, 10);
+
+      const outputElement = document.getElementById('outputWebCrypto');
+      const debugOutputElement = document.getElementById('debugOutputWebCrypto');
+
+      outputElement.textContent = "Decrypting...";
+      outputElement.style.color = "initial";
+      debugOutputElement.textContent = "Generating debug info...";
+
+      if (!base64CiphertextWithTag || !password || !saltBase64 || !nonceBase64 || isNaN(iterations) || iterations <= 0) {
+        outputElement.textContent = "❌ Please fill in all fields correctly.";
+        outputElement.style.color = "red";
+        debugOutputElement.textContent = "Missing or invalid input.";
+        return;
+      }
+
+      // GCM authentication tag length (16 bytes = 128 bits)
+      const GCM_TAG_LENGTH_BITS = 128; 
+
+      try {
+        const salt = base64ToUint8Array(saltBase64);
+        const nonce = base64ToUint8Array(nonceBase64); // This is the nonce for GCM
+        const fullCiphertextBuffer = base64ToUint8Array(base64CiphertextWithTag);
+
+        // 1. Import the password as a CryptoKey for PBKDF2
+        const passwordKey = await crypto.subtle.importKey(
+          'raw',
+          new TextEncoder().encode(password),
+          { name: 'PBKDF2' },
+          false,
+          ['deriveKey']
+        );
+
+        // 2. Derive the AES key using PBKDF2
+        const aesKey = await crypto.subtle.deriveKey(
+          {
+            name: 'PBKDF2',
+            salt: salt,
+            iterations: iterations,
+            hash: 'SHA-512', // Hash algorithm for PBKDF2
+          },
+          passwordKey,
+          { name: 'AES-GCM', length: 256 }, // AES-256 for GCM mode
+          false, // Not extractable (good for security)
+          ['decrypt']
+        );
+
+        // Debugging: Attempt to export key (will fail if not extractable, but shows intent)
+        let derivedKeyHex = "Key not extractable (good for security!)";
+        try {
+            // Temporarily make key extractable for debugging if needed, then revert
+            // const extractableAesKey = await crypto.subtle.exportKey('jwk', aesKey);
+            // derivedKeyHex = arrayBufferToHexString(base64ToUint8Array(extractableAesKey.k));
+            // The above is for JWK format, for raw it's more direct:
+            // const rawAesKeyBuffer = await crypto.subtle.exportKey('raw', aesKey);
+            // derivedKeyHex = arrayBufferToHexString(rawAesKeyBuffer);
+            // NOTE: Since aesKey is not extractable, this block will throw an error,
+            // which is expected and good for production. The `try-catch` handles it.
+        } catch (e) {
+            derivedKeyHex = `Could not export key (expected if not extractable): ${e.message}`;
+        }
+        
+        // Print debug info
+        debugOutputElement.textContent = `
+Salt (Base64): ${saltBase64}
+Nonce (Base64): ${nonceBase64}
+Derived AES Key (Hex): ${derivedKeyHex}
+Iterations: ${iterations}
+        `.trim();
+
+        // 3. Decrypt the ciphertext with GCM
+        // Web Crypto's AES-GCM decrypt function expects the tag *within* the ciphertext buffer.
+        // The `tagLength` option tells it how much of the end to treat as the tag.
+        const decryptedBuffer = await crypto.subtle.decrypt(
+          {
+            name: 'AES-GCM',
+            iv: nonce, // The nonce acts as the IV for GCM
+            tagLength: GCM_TAG_LENGTH_BITS, // Must match the tag length produced by C program (128 bits = 16 bytes)
+          },
+          aesKey,
+          fullCiphertextBuffer 
+        );
+
+        // 4. Decode the decrypted data (assuming UTF-8 text)
+        const decryptedText = new TextDecoder().decode(decryptedBuffer);
+        outputElement.textContent = `✅ Decrypted: ${decryptedText}`;
+        outputElement.style.color = "green";
+
+      } catch (e) {
+        // GCM decryption fails if the tag is invalid (data tampered with) or parameters are wrong.
+        outputElement.textContent = `❌ Decryption failed: ${e.message}. This could be due to incorrect password, salt, nonce, iterations, or (importantly for GCM) data tampering.`;
+        outputElement.style.color = "red";
+        debugOutputElement.textContent = `Error during key derivation or decryption: ${e.message}`;
+        console.error("Web Crypto API Decryption error:", e);
+      }
+    }
+  </script>
+</body>
+</html>
