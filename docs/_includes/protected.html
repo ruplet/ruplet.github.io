@@ -1,1 +1,264 @@
-<div class="protected-box" data-encrypted-url="{{ include.url }}"></div>
+<!-- _includes/protected.html -->
+<style>
+  /* Basic styling for the decryptor, can be customized */
+  .protected-content-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Inter', sans-serif;
+    color: #333;
+  }
+  .protected-content-container h2 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+  .protected-content-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+  .protected-content-container button {
+    padding: 12px 25px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: block; /* Make button full width */
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .protected-content-container button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+  }
+  .protected-content-container button:active {
+    transform: translateY(0);
+  }
+  .protected-content-container pre {
+    background-color: #e9ecef;
+    padding: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    margin-top: 20px;
+  }
+  .protected-content-container .security-info {
+    background-color: #e6ffe6;
+    border: 1px solid #82e0aa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    color: #28a745;
+  }
+  .protected-content-container .error-message {
+    color: #dc3545;
+    font-weight: bold;
+  }
+  .protected-content-container .success-message {
+    color: #28a745;
+    font-weight: bold;
+  }
+  .protected-content-container .loading-message {
+    color: #555;
+    font-style: italic;
+  }
+  .protected-content-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+  }
+</style>
+
+<div class="protected-content-container">
+  <h2>Protected Content</h2>
+
+  <div class="security-info">
+    <p>This content is encrypted using **AES-GCM (Galois/Counter Mode)**, providing both **confidentiality** and **integrity/authenticity**. If decryption is successful, you can be confident that the content is both secret and has not been tampered with.</p>
+    <p><strong>Important:</strong> Decryption happens entirely in your browser. Your password is never sent to any server.</p>
+  </div>
+
+  <p>Please enter the password to view the content:</p>
+
+  <label for="passwordInputProtected">Password:</label><br>
+  <input type="password" id="passwordInputProtected" placeholder="Enter the password"><br>
+
+  <button onclick="decryptProtectedContent()">Decrypt Content</button>
+
+  <pre id="outputProtectedContent" class="output-box"></pre>
+</div>
+
+<script>
+  // Get the base URL of your GitHub Pages site
+  // This will be something like "https://yourusername.github.io/your-repo-name"
+  // or "https://yourusername.github.io" if it's a user/organization page.
+  const BASE_URL = window.location.origin + "{{ site.baseurl }}";
+
+  // The path to the encrypted file, passed from Jekyll Liquid
+  const ENCRYPTED_FILE_PATH = "{{ include.url }}";
+
+  // Derive paths for salt and nonce files
+  // Assuming the structure: /path/to/file.txt.enc, /path/to/file.txt.salt, /path/to/file.txt.nonce
+  const SALT_FILE_PATH = ENCRYPTED_FILE_PATH.replace(/\.enc$/, '.salt');
+  const NONCE_FILE_PATH = ENCRYPTED_FILE_PATH.replace(/\.enc$/, '.nonce');
+
+  // PBKDF2 Iterations (must match C encryption program)
+  const PBKDF2_ITERATIONS = 100000;
+  const GCM_TAG_LENGTH_BITS = 128; // 16 bytes
+
+  // --- Helper Functions ---
+  function base64ToUint8Array(base64) {
+    try {
+      const binary_string = window.atob(base64);
+      const len = binary_string.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binary_string.charCodeAt(i);
+      }
+      return bytes;
+    } catch (e) {
+      throw new Error("Invalid Base64 string provided for conversion.");
+    }
+  }
+
+  async function fetchFileContent(filePath) {
+    // Construct the full URL to the raw file on GitHub
+    // Example: https://raw.githubusercontent.com/yourusername/your-repo-name/main/docs/emails/solovay/question.txt.enc
+    // This assumes your Jekyll site is served from the 'main' branch's root or 'docs' folder.
+    // Adjust 'main' if your default branch is different (e.g., 'master').
+    // Adjust 'your-repo-name' if BASE_URL doesn't include it.
+    // A more robust way might be to get the repo name from window.location.pathname
+    // but for Jekyll, the site.baseurl usually handles the repo part.
+
+    // Let's construct a more reliable raw content URL based on the current page's URL
+    // and the relative path provided by Jekyll.
+    // This is often the most complex part of static site fetching.
+
+    // This attempts to get the raw.githubusercontent.com URL.
+    // It's crucial this matches how GitHub serves your raw files.
+    // For user/org pages (yourusername.github.io), the repo name is the username.
+    // For project pages (yourusername.github.io/repo-name), the repo name is repo-name.
+
+    // Get GitHub username and repository name from window.location
+    const pathParts = window.location.pathname.split('/').filter(p => p.length > 0);
+    let githubUsername = '';
+    let githubRepo = '';
+
+    if (pathParts.length > 0 && BASE_URL === window.location.origin) {
+        // User/Organization page: https://yourusername.github.io
+        githubUsername = pathParts[0];
+        githubRepo = ''; // No repo name in URL path
+    } else if (pathParts.length > 0 && BASE_URL.includes(window.location.origin + '/' + pathParts[0])) {
+        // Project page: https://yourusername.github.io/repo-name
+        githubUsername = window.location.hostname.split('.')[0]; // yourusername
+        githubRepo = pathParts[0]; // repo-name
+    } else {
+        // Fallback or more complex structure, might need manual configuration
+        console.warn("Could not reliably determine GitHub repo structure. Using a generic raw URL.");
+        // You might need to manually set these if the auto-detection fails for your specific setup
+        // githubUsername = "YOUR_GITHUB_USERNAME";
+        // githubRepo = "YOUR_REPO_NAME"; // Leave empty if it's a user/org page
+    }
+
+    // Construct the raw.githubusercontent.com URL
+    // Assumes files are in the 'main' branch. Change 'main' to 'master' if needed.
+    let rawUrl = `https://raw.githubusercontent.com/${githubUsername}/${githubRepo}/main${filePath}`;
+    
+    // If it's a user/org page, the repo name is part of the username, so no extra /repo-name/ in the raw URL
+    if (githubRepo === '') {
+        rawUrl = `https://raw.githubusercontent.com/${githubUsername}/${githubUsername}.github.io/main${filePath}`;
+    }
+
+    console.log(`Fetching: ${rawUrl}`);
+    const response = await fetch(rawUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch ${filePath}: ${response.statusText}`);
+    }
+    return response.text(); // Return as text (Base64 string)
+  }
+
+  async function decryptProtectedContent() {
+    const password = document.getElementById('passwordInputProtected').value;
+    const outputElement = document.getElementById('outputProtectedContent');
+
+    outputElement.textContent = "Fetching encrypted files...";
+    outputElement.className = "output-box loading-message";
+
+    if (!password) {
+      outputElement.textContent = "❌ Error: Please enter the password.";
+      outputElement.className = "output-box error-message";
+      return;
+    }
+
+    try {
+      // Fetch all three files concurrently
+      const [b64CiphertextWithTag, b64Salt, b64Nonce] = await Promise.all([
+        fetchFileContent(ENCRYPTED_FILE_PATH),
+        fetchFileContent(SALT_FILE_PATH),
+        fetchFileContent(NONCE_FILE_PATH)
+      ]);
+
+      outputElement.textContent = "Files fetched. Decrypting...";
+      outputElement.className = "output-box loading-message";
+
+      const salt = base64ToUint8Array(b64Salt);
+      const nonce = base64ToUint8Array(b64Nonce);
+      const fullCiphertextBuffer = base64ToUint8Array(b64CiphertextWithTag);
+
+      // 1. Import the password as a CryptoKey for PBKDF2
+      const passwordKey = await crypto.subtle.importKey(
+        'raw',
+        new TextEncoder().encode(password),
+        { name: 'PBKDF2' },
+        false,
+        ['deriveKey']
+      );
+
+      // 2. Derive the AES key using PBKDF2
+      const aesKey = await crypto.subtle.deriveKey(
+        {
+          name: 'PBKDF2',
+          salt: salt,
+          iterations: PBKDF2_ITERATIONS,
+          hash: 'SHA-512',
+        },
+        passwordKey,
+        { name: 'AES-GCM', length: 256 },
+        false, // Not extractable (good for security)
+        ['decrypt']
+      );
+
+      // 3. Decrypt the ciphertext with GCM
+      const decryptedBuffer = await crypto.subtle.decrypt(
+        {
+          name: 'AES-GCM',
+          iv: nonce,
+          tagLength: GCM_TAG_LENGTH_BITS,
+        },
+        aesKey,
+        fullCiphertextBuffer 
+      );
+
+      // 4. Decode the decrypted data (assuming UTF-8 text)
+      const decryptedText = new TextDecoder().decode(decryptedBuffer);
+      outputElement.textContent = `✅ Decrypted Content:\n\n${decryptedText}`;
+      outputElement.className = "output-box success-message";
+
+    } catch (e) {
+      outputElement.textContent = `❌ Decryption failed: ${e.message}. This could be due to an incorrect password, corrupted files, or network issues.`;
+      outputElement.className = "output-box error-message";
+      console.error("Decryption error:", e);
+    }
+  }
+</script>
