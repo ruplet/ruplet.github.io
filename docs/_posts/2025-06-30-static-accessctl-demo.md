@@ -6,7 +6,9 @@ title: Demonstration of password-protection of content on a static webpage
 # 
 
 ## Demonstration
-This particular content has been encrypted with the passphrase below. Please use it to view the content
+This particular content has been encrypted with the passphrase below. Please use it to view the content.
+Note: please make sure to not copy any whitespace (e.g. leading/trailing spaces) with the password, as it
+will be detected as wrong.
 
 <style>
   /* Minimal container styling */
@@ -80,9 +82,7 @@ This particular content has been encrypted with the passphrase below. Please use
 </style>
 
 <div class="copy-widget-container-icon">
-  <textarea id="copyableTextIcon" readonly>
-!!qm89bijWvU#0vaTkaKNh&rOKbGfrfWNnfhlOXy&pWmSZekC5f@!*FkIO8ppa75%4n^iyc0g83a8Yw8WDXMbwgu^9NOsY%YYh1A@Fe@G#Hc8gwZI^Bt*Xj0moOg$ghC
-  </textarea>
+  <textarea id="copyableTextIcon" readonly>!!qm89bijWvU#0vaTkaKNh&rOKbGfrfWNnfhlOXy&pWmSZekC5f@!*FkIO8ppa75%4n^iyc0g83a8Yw8WDXMbwgu^9NOsY%YYh1A@Fe@G#Hc8gwZI^Bt*Xj0moOg$ghC</textarea>
   <div class="copy-icon-wrapper">
     <!-- SVG Icon for Copy - Two overlapping squares -->
     <svg class="copy-icon" onclick="copyContentIcon()" viewBox="0 0 24 24">

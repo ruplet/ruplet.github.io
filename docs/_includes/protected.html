@@ -1,12 +1,13 @@
 <!-- _includes/protected.html -->
 <style>
-  /* Minimal styling for the decryption box to blend with Jekyll Minima */
+  /* Minimal container styling to center and provide a subtle border */
   .protected-content-container {
-    max-width: 480px; /* Make it smaller */
-    margin: 2em auto; /* Center and add vertical space */
+    max-width: 480px; /* Keep it relatively small */
+    margin: 2em auto; /* Center it horizontally with vertical spacing */
     padding: 1.5em;
-    border: 1px solid var(--border-color, #e8e8e8); /* Inherit/blend with theme border */
+    border: 1px solid var(--border-color, #e8e8e8); /* Blend with theme border */
     border-radius: 8px;
+    text-align: center; /* Center button */
     /* No explicit background/text colors to respect theme (light/dark) */
   }
   .protected-content-container h3 { /* Changed from h2 to h3 for less prominence */
@@ -19,7 +20,6 @@
     font-size: 0.9em;
     line-height: 1.5;
   }
-  .protected-content-container textarea,
   .protected-content-container input[type="password"] {
     width: 100%;
     padding: 0.6em;
@@ -39,24 +39,29 @@
     cursor: pointer;
     font-size: 1em;
     font-weight: bold;
-    /* Use Minima's link/accent color if possible, or a neutral button */
     background-color: var(--link-color, #268bd2); /* Example: Minima's link color */
     color: var(--background-color, white); /* Text color contrasting with button */
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.1s ease;
   }
   .protected-content-container button:hover {
     background-color: var(--link-color-hover, #1a6ba8); /* Darker on hover */
+    transform: translateY(-1px);
   }
-  .protected-content-container pre {
+  .protected-content-container button:active {
+    transform: translateY(0);
+  }
+  /* Styling for the div that will render HTML content */
+  .protected-content-output { /* New class for the output div */
     padding: 1em;
     margin-top: 1em;
     border: 1px solid var(--border-color, #ccc);
     border-radius: 4px;
-    white-space: pre-wrap;
-    word-break: break-all;
     background-color: var(--code-background-color, #f0f0f0);
     color: inherit; /* Inherit text color */
     font-size: 0.9em;
+    text-align: left; /* Align text normally within the rendered HTML */
+    word-wrap: break-word; /* Ensure long words break */
+    overflow-x: auto; /* Allow horizontal scroll for wide content like tables/code */
   }
   .protected-content-container .security-info {
     padding: 1em;
@@ -68,15 +73,15 @@
     color: inherit; /* Inherit text color */
   }
   /* Message styles - use standard text colors */
-  .protected-content-container .error-message {
+  .protected-content-output.error-message { /* Apply to the output div */
     color: var(--error-color, #dc3545); /* Red for errors */
     font-weight: bold;
   }
-  .protected-content-container .success-message {
+  .protected-content-output.success-message { /* Apply to the output div */
     color: var(--success-color, #28a745); /* Green for success */
     font-weight: bold;
   }
-  .protected-content-container .loading-message {
+  .protected-content-output.loading-message { /* Apply to the output div */
     color: inherit; /* Inherit text color */
     font-style: italic;
   }
@@ -93,17 +98,18 @@
   <h3>Protected Content</h3>
 
   <div class="security-info">
-    <p>This content is encrypted using AES-GCM (Web Crypto API) to protect notes not yet made public. Decryption happens in your browser; your password is never sent to any server.</p>
+    <p>This content is encrypted using **AES-GCM**, providing both **confidentiality** and **integrity**. Decryption happens in your browser; your password is never sent to any server.</p>
   </div>
 
-  <!-- <p>Please enter the password to view the content:</p> -->
+  <p>Please enter the password to view the content:</p>
 
   <label for="passwordInputProtected">Password:</label><br>
   <input type="password" id="passwordInputProtected" placeholder="Enter password"><br>
 
   <button onclick="decryptProtectedContent()">Decrypt Content</button>
 
-  <pre id="outputProtectedContent" class="output-box"></pre>
+  <!-- Changed from <pre> to <div> to allow HTML rendering -->
+  <div id="outputProtectedContent" class="protected-content-output"></div>
 </div>
 
 <script>
@@ -153,12 +159,12 @@
     const password = document.getElementById('passwordInputProtected').value;
     const outputElement = document.getElementById('outputProtectedContent');
 
-    outputElement.textContent = "Fetching encrypted files...";
-    outputElement.className = "output-box loading-message";
+    outputElement.innerHTML = "Fetching encrypted files..."; // Use innerHTML for loading message too
+    outputElement.className = "protected-content-output loading-message"; // Apply new class
 
     if (!password) {
-      outputElement.textContent = "❌ Error: Please enter the password.";
-      outputElement.className = "output-box error-message";
+      outputElement.innerHTML = "❌ Error: Please enter the password.";
+      outputElement.className = "protected-content-output error-message";
       return;
     }
 
@@ -170,8 +176,8 @@
         fetchFileContent(NONCE_FILE_PATH)
       ]);
 
-      outputElement.textContent = "Files fetched. Decrypting...";
-      outputElement.className = "output-box loading-message";
+      outputElement.innerHTML = "Files fetched. Decrypting...";
+      outputElement.className = "protected-content-output loading-message";
 
       const salt = base64ToUint8Array(b64Salt);
       const nonce = base64ToUint8Array(b64Nonce);
@@ -213,12 +219,14 @@
 
       // 4. Decode the decrypted data (assuming UTF-8 text)
       const decryptedText = new TextDecoder().decode(decryptedBuffer);
-      outputElement.textContent = `✅ Decrypted Content:\n\n${decryptedText}`;
-      outputElement.className = "output-box success-message";
+      
+      // *** THE KEY CHANGE: Use innerHTML to render HTML content ***
+      outputElement.innerHTML = `✅ Decrypted Content:<br><br>${decryptedText}`;
+      outputElement.className = "protected-content-output success-message";
 
     } catch (e) {
-      outputElement.textContent = `❌ Decryption failed: ${e.message}. This could be due to an incorrect password, corrupted files, or network issues.`;
-      outputElement.className = "output-box error-message";
+      outputElement.innerHTML = `❌ Decryption failed: ${e.message}. This could be due to an incorrect password, corrupted files, or network issues.`;
+      outputElement.className = "protected-content-output error-message";
       console.error("Decryption error:", e); // Keep detailed error in console
     }
   }
