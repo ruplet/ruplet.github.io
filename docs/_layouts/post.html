@@ -38,12 +38,15 @@ layout: base
 
   {% if jekyll.environment == 'production' -%}
     {% if page.comments == false -%}
+    <p>Comments are disabled!</p>
       <div class="comments-disabled-message">
         Comments have been disabled for this post.
       </div>
     {% else -%}
+    <p>Comments are enabled!</p>
       {%- include comments.html -%}
     {% endif -%}
+    <p>Debug msg</p>
   {% else -%}
     <div class="comments-disabled-message">
       Comments are disabled by default for non-production environments.
