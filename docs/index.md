@@ -1,5 +1,6 @@
 ---
 title: Paweł Balawender
+layout: home
 ---
 
 ## About Me:
