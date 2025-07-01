@@ -42,9 +42,7 @@ layout: base
         Comments have been disabled for this post.
       </div>
     {% else -%}
-      <p>Comments powered by Giscus!</p>
       {%- include comments.html -%}
-      {%- include protected.html url="/private/demo-encrypted/demo.html.enc" -%}
     {% endif -%}
   {% else -%}
     <div class="comments-disabled-message">
