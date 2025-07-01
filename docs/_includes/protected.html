@@ -98,12 +98,10 @@
   <h3>Protected Content</h3>
 
   <div class="security-info">
-    <p>This content is encrypted using **AES-GCM**, providing both **confidentiality** and **integrity**. Decryption happens in your browser; your password is never sent to any server.</p>
+    <p>This content is encrypted using AES-GCM to protect non-public information. Decryption happens in your browser; your password is never sent to any server.</p>
+    <p>Please enter the password to view the content:</p>
   </div>
-
-  <p>Please enter the password to view the content:</p>
-
-  <label for="passwordInputProtected">Password:</label><br>
+  <!-- <label for="passwordInputProtected">Password:</label><br> -->
   <input type="password" id="passwordInputProtected" placeholder="Enter password"><br>
 
   <button onclick="decryptProtectedContent()">Decrypt Content</button>
