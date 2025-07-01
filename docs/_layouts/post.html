@@ -44,12 +44,9 @@ layout: base
     {% else -%}
       {%- include comments.html -%}
     {% endif -%}
-    <div class="comments-disabled-message">
-      Jekyll environment is production :) Comments should appear here if not disabled explicitly.
-    </div>
   {% else -%}
     <div class="comments-disabled-message">
-      Jekyll environment is not production, so comments have been disabled.
+      Comments are disabled by default for non-production environments.
     </div>
   {% endif -%}
 
