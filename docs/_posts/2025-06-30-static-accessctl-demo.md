@@ -132,4 +132,4 @@ will be detected as wrong.
   // });
 </script>
 
-{% include protected.html url="/private/demo-encrypted/pendulum.html.enc" %}
+{% include protected.html url="/private/demo-encrypted/demo.html.enc" %}
