@@ -21,7 +21,7 @@ Setting up a website was always terra incognita for me. I knew nothing about fro
  Jekyll `minima` theme's GitHub repository to include the `giscus`' HTML tag, as suggested on Reddit (there is a link to the specific comment in the `_layouts/post.html` file) - it seems to work flawlessly!
  - As for setting up the domain, I used Namecheap and used GitHub Pages' official instructions on how to specifically
  integrate it with a custom domain; e.g. what records (mostly TXT records) to set up at the domain registrar's site,
- what to issue in GitHub settings.
+ what to issue in GitHub settings: https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site
  - I also configured an e-mail account - I followed iCloud Plus' official instructions on how to set up
  e-mail with a custom domain. As of now, it also seem to work flawlessy. iCloud Plus is a paid subscription, but very cheap as I'm writing this (about 1 USD per month for me) and allows me to view and send my e-mails
  from a web client and from the mobile official iOS Mail application.
