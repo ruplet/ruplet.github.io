@@ -37,24 +37,21 @@ layout: base
   </div>
 
   {% if jekyll.environment == 'production' -%}
-  {% if page.comments == false -%}
-  <div class="comments-disabled-message">
-    Comments have been disabled for this post.
-  </div>
+    {% if page.comments == false -%}
+      <div class="comments-disabled-message">
+        Comments have been disabled for this post.
+      </div>
+    {% else -%}
+      {%- include comments.html -%}
+    {% endif -%}
+    <div class="comments-disabled-message">
+      Jekyll environment is production :) Comments should appear here if not disabled explicitly.
+    </div>
   {% else -%}
-  {%- include comments.html -%}
+    <div class="comments-disabled-message">
+      Jekyll environment is not production, so comments have been disabled.
+    </div>
   {% endif -%}
-  {% else -%}
-  <div class="comments-disabled-message">
-    Jekyll environment is not production, so comments have been disabled.
-  </div>
-  {% endif -%}
-  <div class="comments-disabled-message">
-    Div2
-  </div>
-  <div >
-    Div1
-  </div>
 
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>
