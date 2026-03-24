@@ -12,4 +12,4 @@ What should be in the calendar:
 
 Enjoy :)
 
-https://github.com/ruplet/AI-for-Math-calendar-2026/tree/main
+[https://github.com/ruplet/AI-for-Math-calendar-2026/tree/main](https://github.com/ruplet/AI-for-Math-calendar-2026/tree/main)
