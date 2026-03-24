@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Presentation at KNUM society (University of Warsaw)"
+title: "Presentation at KNUM society (University of Warsaw): How type systems are used to verify reasoning of AI?"
 ---
 On 22nd of May 2025, I gave a talk with a brief introduction to how type systems are used to verify gradually
 more advanced reasoning and how is it utilized to work on mathematics using AI.
