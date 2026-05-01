@@ -1,4 +1,6 @@
--- link: https://live.lean-lang.org/?url=https://ruplet.com/lean-examples/Pullback.lean
+-- Link for Lean4Web:
+-- https://live.lean-lang.org/?url=https%3A%2F%2Fruplet.com%2Flean-examples%2FPullback.lean#url=https%3A%2F%2Fruplet.com%2Flean-examples%2FPullback.lean
+
 import Mathlib.CategoryTheory.Limits.Shapes.Pullback.PullbackCone
 
 -- Open to use ≫ syntax for morphism composition.
